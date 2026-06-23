@@ -5,7 +5,7 @@
     
     <div class="hidden lg:block lg:col-span-1 bg-white border border-slate-200/60 rounded-2xl p-5 shadow-xs sticky top-24">
         <div class="flex flex-col items-center text-center">
-            <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 p-0.5 shadow-sm mb-3">
+            <div class="w-16 h-16 rounded-full bg-gradient-to from-blue-600 to-indigo-600 p-0.5 shadow-sm mb-3">
                 <div class="w-full h-full bg-white rounded-full flex items-center justify-center font-bold text-lg text-slate-800">
                     IB
                 </div>
