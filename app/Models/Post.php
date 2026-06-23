@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Models;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory; 
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 
 {
-    protected $fillable = ['content', 'user_id']; // Bach n-goulou l Laravel hado y9dro yt-amodifiaw
+    use HasFactory;
+    protected $fillable = ['content', 'user_id']; 
 
 public function user()
 {

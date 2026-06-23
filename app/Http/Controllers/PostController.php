@@ -10,7 +10,7 @@ class PostController extends Controller
 {
     public function index(){
         $posts = Post::with('user')->latest()->get();
-        return view('feed',compact('post'));
+        return view('feed',['posts'=>$posts]);
     }
     //
 }
