@@ -45,6 +45,19 @@
                     </div>
                 </div>
 
+                <div class="flex items-center space-x-4 border-l border-slate-200 pl-4">
+    <div class="w-8 h-8 rounded-full bg-slate-900 text-white flex items-center justify-center text-[10px] font-bold">
+        {{ substr(auth()->user()->name ?? 'U', 0, 2) }}
+    </div>
+
+    <form action="{{ route('logout') }}" method="POST" class="inline">
+        @csrf
+        <button type="submit" class="text-xs font-semibold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100/80 px-3 py-1.5 rounded-xl transition cursor-pointer">
+            Déconnexion
+        </button>
+    </form>
+</div>
+
             </div>
         </div>
     </nav>
