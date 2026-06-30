@@ -10,8 +10,8 @@
                     IB
                 </div>
             </div>
-            <h2 class="font-bold text-slate-900 text-sm tracking-tight">Ihsane Ben-Mouina</h2>
-            <p class="text-[11px] text-blue-600 font-medium mt-0.5">Développeuse Fullstack</p>
+            <h2 class="font-bold text-slate-900 text-sm tracking-tight">{{ auth()->user()->name }}</h2>
+            <p class="text-[11px] text-blue-600 font-medium mt-0.5">{{ auth()->user()->headline }}</p>
             
             <hr class="w-full border-slate-100 my-3.5">
             

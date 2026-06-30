@@ -8,8 +8,8 @@ Route::get('/feed',[PostController::class, 'index'])->name('feed');
 
 
 
-Route::get('/showRegister',[AuthController::class, 'showRegister'])->name('show.registrer'); 
-Route::get('/showLogin',[AuthController::class, 'showLogin'])->name('show.login');
-Route::post('/login',[AuthController::class, 'login'])->name('login');
-Route::post('/register',[AuthController::class, 'register'])->name('register');
+Route::get('/register',[AuthController::class, 'showRegister'])->name('show.registrer'); 
+Route::get('/login',[AuthController::class, 'showLogin'])->name('show.login');
+Route::post('/login/store',[AuthController::class, 'login'])->name('login');
+Route::post('/register/store',[AuthController::class, 'register'])->name('register');
 

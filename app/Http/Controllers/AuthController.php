@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Container\Attributes\Auth as AttributesAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use app\Models\User;
+use App\Models\User as ModelsUser;
 
 class AuthController extends Controller
 {
@@ -30,10 +30,10 @@ class AuthController extends Controller
          $validated=$request->validate([
             'name'=>'required | max:20',
             'email'=>'required | email | unique:users' ,
-            'password'=>'required | string | min:8',
-            'headline'=>'required | confirmed'
+            'password'=>'required | string | min:8 | confirmed',
+            'headline'=>'required '
         ]);
-        $user=User::create( $validated);
+        $user = ModelsUser::create( $validated);
 
         Auth::login($user);
         return redirect()->route('feed'); 
