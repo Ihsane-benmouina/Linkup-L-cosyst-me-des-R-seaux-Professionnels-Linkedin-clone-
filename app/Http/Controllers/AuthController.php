@@ -36,8 +36,7 @@ class AuthController extends Controller
         $user=User::create( $validated);
 
         Auth::login($user);
-        return redirect()->route('feed');
-        
+        return redirect()->route('feed'); 
     }
 
 
