@@ -25,5 +25,14 @@ class PostController extends Controller
         ]);
         return redirect()->route('feed');
     }
+     public function updatePost(Request $request, Post $post)
+    {
+        $this->authorize('update', $post);
+
+        $post->update([
+            'content' => $request->content
+        ]);
+        return redirect()->route('feed')->with('success','post updeted seccessfully');
+    }
     //
 }
