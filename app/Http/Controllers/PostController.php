@@ -20,7 +20,7 @@ class PostController extends Controller
     public function store(StorePostRequest $resquest){
         $resquest->validated();
 
-        User::create([
+        Post::create([
             'content'=>$resquest->content,
             'user_id'=>Auth::id()
         ]);
