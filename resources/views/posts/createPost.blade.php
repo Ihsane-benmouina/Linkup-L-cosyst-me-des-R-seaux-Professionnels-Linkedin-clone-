@@ -1,37 +1,34 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Créer un post — LinkUp</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
-</head>
-<body class="bg-[#f8fafc] text-[#0f172a] antialiased flex items-center justify-center min-h-screen p-4">
+@extends('layouts.app')
 
-    <div class="w-full max-w-lg bg-white border border-slate-200/60 rounded-2xl p-6 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
-        <div class="flex justify-between items-center mb-5">
-            <h1 class="text-sm font-bold text-slate-900 uppercase tracking-wider">Nouvelle publication</h1>
-            <a href="{{ route('feed') }}" class="text-xs text-slate-400 hover:text-slate-600 font-medium">Annuler</a>
+@section('content')
+<div class="max-w-lg mx-auto px-4">
+    <div class="bg-white border border-[--border] rounded-[1.75rem] p-6 shadow-[0_10px_30px_-12px_rgba(124,111,238,0.18)]">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="font-display text-base font-bold text-[--ink] flex items-center space-x-2">
+                <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm" style="background:var(--pink-light);">✍️</span>
+                <span>Nouvelle publication</span>
+            </h1>
+            <a href="{{ route('feed') }}" class="text-xs text-[--muted] hover:text-[--primary] font-semibold transition">Annuler</a>
         </div>
 
         <form action="{{ route('posts.store') }}" method="POST" class="space-y-4">
             @csrf
             <div>
-                <label class="block text-[11px] font-bold text-slate-700 uppercase tracking-wider mb-2">Quoi de neuf ?</label>
-                <textarea name="content" rows="5" placeholder="Partagez vos idées ou réalisations (min: 10 caractères)..." required
-                          class="w-full bg-slate-50/50 border border-slate-200 rounded-xl p-3 text-xs focus:outline-none focus:border-slate-900 focus:bg-white transition resize-none">{{ old('content') }}</textarea>
+                <label class="block text-[11px] font-bold text-[--muted] uppercase tracking-wider mb-2">Quoi de neuf ?</label>
+                <!-- Hna tslla7 l-khata2 dyal quotes -->
+                <textarea name="content" rows="5" placeholder="Partagez vos idées, projets ou réalisations..." required
+                          class="w-full bg-[--bg] border border-[--border] rounded-2xl p-4 text-xs focus:outline-none focus:border-[--primary] focus:ring-4 focus:ring-[--primary]/10 focus:bg-white transition">{{ old('content') }}</textarea>
                 @error('content')
-                    <p class="text-red-500 text-[11px] mt-1.5 font-medium">{{ $message }}</p>
+                    <p class="text-rose-600 text-[11px] mt-1.5 font-semibold">{{ $message }}</p>
                 @enderror
             </div>
 
-            <button type="submit" class="w-full bg-black hover:bg-slate-800 text-white font-semibold text-xs py-2.5 rounded-xl transition cursor-pointer shadow-xs">
+            <button type="submit"
+                    class="w-full text-white font-bold text-xs py-3.5 rounded-full transition cursor-pointer shadow-lg shadow-[--primary]/20 hover:shadow-xl hover:-translate-y-0.5"
+                    style="background:linear-gradient(135deg,var(--primary),var(--pink));">
                 Publier le post
             </button>
         </form>
     </div>
-
-</body>
-</html>
+</div>
+@endsection
