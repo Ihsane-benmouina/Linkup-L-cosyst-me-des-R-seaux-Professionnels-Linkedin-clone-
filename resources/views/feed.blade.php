@@ -33,7 +33,7 @@
         <!-- Section Action Create -->
         <div class="bg-white border border-slate-200/60 rounded-2xl p-4 mb-6 flex items-center justify-between shadow-[0_1px_3px_rgba(0,0,0,0.01)]">
             <p class="text-xs text-slate-400 font-medium">Partagez votre actualité professionnelle...</p>
-            <a href="{{ route('posts.form') }}" class="bg-black hover:bg-slate-800 text-white font-semibold text-xs px-4 py-2 rounded-xl transition">
+            <a href="{{ route('posts.create')}}" class="bg-black hover:bg-slate-800 text-white font-semibold text-xs px-4 py-2 rounded-xl transition">
                 Créer un post
             </a>
         </div>
@@ -63,13 +63,13 @@
                     <!-- Content -->
                     <p class="text-xs text-slate-700 leading-relaxed whitespace-pre-line">{{ $post->content }}</p>
 
-                    <!-- Verrous & Protection @can (US 4.1) -->
+                    {{-- Verrous & Protection @can (US 4.1) --}}
                     @can('update', $post)
                         <div class="flex items-center space-x-2 pt-3 border-t border-slate-100 mt-4">
-                            <a href="{{ route('posts.pageUpdate', $post) }}" class="text-[11px] font-semibold text-slate-600 hover:text-blue-600 bg-slate-50 hover:bg-blue-50 px-3 py-1.5 rounded-lg transition">
+                            <a href="{{route('posts.edit', $post) }}" class="text-[11px] font-semibold text-slate-600 hover:text-blue-600 bg-slate-50 hover:bg-blue-50 px-3 py-1.5 rounded-lg transition">
                                 Modifier
                             </a>
-                            <form action="{{ route('posts.delete', $post) }}" method="POST" class="inline" onsubmit="return confirm('Supprimer ce post ?')">
+                            <form action="{{ route('posts.destroy', $post) }}" method="POST" class="inline" onsubmit="return confirm('Supprimer ce post ?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-[11px] font-semibold text-red-500 hover:text-red-700 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-lg transition cursor-pointer">

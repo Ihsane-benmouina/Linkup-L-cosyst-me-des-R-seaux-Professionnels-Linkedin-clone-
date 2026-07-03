@@ -51,7 +51,7 @@
         </form>
 
         <div class="text-center mt-6 pt-5 border-t border-slate-100">
-            <p class="text-xs text-slate-400">Nouveau sur LinkUp ? <a href="{{ route('show.registrer') }}" class="text-black font-semibold hover:underline">Créer un compte</a></p>
+            <p class="text-xs text-slate-400">Nouveau sur LinkUp ? <a href="{{ route('show.register') }}" class="text-black font-semibold hover:underline">Créer un compte</a></p>
         </div>
 
     </div>
