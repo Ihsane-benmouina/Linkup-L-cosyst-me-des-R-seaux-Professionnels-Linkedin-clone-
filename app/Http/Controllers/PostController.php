@@ -14,7 +14,9 @@ class PostController extends Controller
 
     public function index() {
         $posts = Post::with('user')->latest()->get();
+
         return view('feed', ['posts' => $posts]);
+
     }
 
     public function create() {

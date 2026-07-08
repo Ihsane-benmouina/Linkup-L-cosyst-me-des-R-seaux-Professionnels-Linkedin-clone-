@@ -11,6 +11,8 @@ Route::middleware('guest')->group(function(){
     Route::post('/register/store', [AuthController::class, 'register'])->name('register');
 });
 
+
+
 Route::middleware('auth')->group(function(){
     Route::get('/feed', [PostController::class, 'index'])->name('feed');
     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create'); 

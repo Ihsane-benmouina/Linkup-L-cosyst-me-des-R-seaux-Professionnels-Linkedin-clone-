@@ -23,7 +23,9 @@ class AuthController extends Controller
             'password'=>'required'
         ]);
         if(Auth::attempt($validated)){
-            return redirect()->route('feed');
+            $request->session()->regenerate(); 
+        return redirect()->route('feed');
+            
         }        
     }
     public function register(Request $request){

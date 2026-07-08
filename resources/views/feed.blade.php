@@ -23,6 +23,10 @@
             <p class="font-display text-2xl font-bold mt-1" style="color:var(--pink);">{{ $posts->where('user_id', auth()->id())->count() }}</p>
         </div>
     </div>
+   
+
+
+
 
     <!-- Create post prompt -->
     <a href="{{ route('posts.create') }}" class="bg-white border border-[--border] rounded-2xl p-4 mb-6 flex items-center justify-between hover:border-[--primary]/40 transition group shadow-xs">
