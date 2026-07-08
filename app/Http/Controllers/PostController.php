@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
+use App\Models\Comment;
+
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -56,4 +59,11 @@ class PostController extends Controller
 
         return redirect()->route('feed')->with('success', 'Post deleted successfully');
     }
+
+
+    public function toggleLike(Post $post)
+{
+    $post ->likes()->toggle(Auth::id());
+    return back();
+}
 }

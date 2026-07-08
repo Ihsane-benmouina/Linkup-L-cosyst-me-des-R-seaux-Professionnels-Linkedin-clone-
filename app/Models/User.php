@@ -23,7 +23,7 @@ public function comments() {
     return $this->hasMany(Comment::class);
 }
 
-public function likedPosts() {
+public function likes() {
     return $this->belongsToMany(Post::class, 'like_post');
 }
     /** @use HasFactory<UserFactory> */
