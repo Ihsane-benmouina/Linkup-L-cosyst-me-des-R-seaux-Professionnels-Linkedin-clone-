@@ -19,6 +19,13 @@ public function posts()
 {
     return $this->hasMany(Post::class);
 }
+public function comments() {
+    return $this->hasMany(Comment::class);
+}
+
+public function likedPosts() {
+    return $this->belongsToMany(Post::class, 'like_post');
+}
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
