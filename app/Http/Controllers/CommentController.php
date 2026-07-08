@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use App\Models\Comment;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+
 
 
 use Illuminate\Http\Request;
@@ -11,6 +13,7 @@ use Illuminate\Http\Request;
 class CommentController extends Controller
 {
     //
+    use AuthorizesRequests;
     public function store(Request $request, Post $post)
     {
         $request->validate([
@@ -24,5 +27,14 @@ class CommentController extends Controller
         ]);
 
         return back()->with('success', 'Commentaire ajouté !');
+    }
+
+    public function destroy(Comment $comment)
+    {
+        $this->authorize('delete', $comment);
+
+        $comment->delete();
+
+        return back()->with('success', 'Commentaire supprimé !');
     }
 }
