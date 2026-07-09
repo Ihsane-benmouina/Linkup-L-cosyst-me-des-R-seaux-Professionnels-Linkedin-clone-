@@ -11,9 +11,11 @@
             <a href="{{ route('feed') }}" class="text-xs text-[--muted] hover:text-[--primary] font-semibold transition">Annuler</a>
         </div>
 
-        <form action="{{ route('posts.updatePost', $post) }}" method="POST" class="space-y-4">
-            @csrf
-            @method('PUT')
+        <form action="{{ route('posts.update', $post) }}" method="POST"   class="space-y-4">
+    @csrf
+    @method('PUT')>
+           
+   
 
             <div>
                 <label class="block text-[11px] font-bold text-[--muted] uppercase tracking-wider mb-2">Contenu du post</label>

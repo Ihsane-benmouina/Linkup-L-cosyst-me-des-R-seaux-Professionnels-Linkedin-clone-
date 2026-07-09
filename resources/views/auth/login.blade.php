@@ -52,7 +52,7 @@
                 <p class="text-xs text-[--muted] mt-1 font-medium">Connecte-toi pour continuer sur LinkUp</p>
             </div>
 
-            <form action="{{ route('login')}}" method="POST" class="space-y-4">
+            <form action="{{ route('login.store') }}" method="POST"class="space-y-4">
                 @csrf
 
                 <div>

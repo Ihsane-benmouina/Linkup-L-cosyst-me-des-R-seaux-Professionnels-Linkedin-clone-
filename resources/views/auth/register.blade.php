@@ -50,7 +50,7 @@
                 <p class="text-xs text-[--muted] mt-1 font-medium">Crée ton compte en quelques secondes</p>
             </div>
 
-            <form action="{{ route('register') }}" method="POST" class="space-y-3.5">
+            <form action="{{ route('register.store') }}" method="POST" class="space-y-3.5">
                 @csrf
 
                 <div>
