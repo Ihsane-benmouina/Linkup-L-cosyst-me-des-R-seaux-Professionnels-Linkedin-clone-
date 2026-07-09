@@ -16,7 +16,7 @@ class PostController extends Controller
     use AuthorizesRequests;
 
     public function index() {
-        $posts = Post::with('user')->latest()->get();
+$posts = Post::with(['user', 'comments.user', 'likes'])->latest()->get();
         return view('feed', ['posts' => $posts]);
     }
 

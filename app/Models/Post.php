@@ -19,7 +19,7 @@ public function comments() {
 }
 
 public function likes() {
-    return $this->belongsToMany(User::class, 'like_post')->withTimestamps();
+    return $this->belongsToMany(User::class, 'likes')->withTimestamps();
 }
     
 }

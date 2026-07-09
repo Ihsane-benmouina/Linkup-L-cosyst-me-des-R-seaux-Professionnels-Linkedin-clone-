@@ -24,7 +24,7 @@ public function comments() {
 }
 
 public function likes() {
-    return $this->belongsToMany(Post::class, 'like_post');
+    return $this->belongsToMany(Post::class, 'likes');
 }
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;

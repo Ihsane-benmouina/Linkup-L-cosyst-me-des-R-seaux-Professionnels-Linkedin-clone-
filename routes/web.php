@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
+
 use Illuminate\Support\Facades\Route;
 
 // الـ Route الرئيسي يوجه مباشرة لـ Feed
@@ -35,4 +37,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit'); // كيعيط على edit()
     Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update'); // كيعيط على update()
     Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy'); // كيعيط على destroy()
+    // نظام التعليقات (Comments)
+    Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+
+    // نظام الإعجابات (Likes)
+    Route::post('/posts/{post}/like', [PostController::class, 'toggleLike'])->name('posts.like');
 });
