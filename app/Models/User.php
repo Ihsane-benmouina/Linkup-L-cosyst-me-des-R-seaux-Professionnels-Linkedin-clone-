@@ -10,11 +10,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password', 'headline'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
-
+    protected $fillable = [
+        'name',
+        'headline',
+        'company',
+        'image_url',
+        'is_open_to_work',
+        'email',
+        'password',
+    ];
 public function posts()
 {
     return $this->hasMany(Post::class);
@@ -25,6 +32,22 @@ public function comments() {
 
 public function likes() {
     return $this->belongsToMany(Post::class, 'likes');
+}
+
+
+public function followings() 
+{
+    return $this->belongsToMany(User::class, 'follows', 'follower_id', 'user_id');
+}
+
+public function followers()
+{
+    return $this->belongsToMany(User::class, 'follows', 'user_id', 'follower_id');
+}
+
+public function isFollowing(User $user)
+{
+    return $this->followings()->where('user_id', $user->id)->exists();
 }
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;

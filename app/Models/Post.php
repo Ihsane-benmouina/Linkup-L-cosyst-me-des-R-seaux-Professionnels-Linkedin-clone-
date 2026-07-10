@@ -21,5 +21,15 @@ public function comments() {
 public function likes() {
     return $this->belongsToMany(User::class, 'likes')->withTimestamps();
 }
+
+public function originalPost()
+{
+    return $this->belongsTo(Post::class, 'original_post_id');
+}
+
+public function reposts()
+{
+    return $this->hasMany(Post::class, 'original_post_id');
+}
     
 }
