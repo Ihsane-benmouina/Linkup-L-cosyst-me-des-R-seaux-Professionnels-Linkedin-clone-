@@ -49,6 +49,16 @@ public function isFollowing(User $user)
 {
     return $this->followings()->where('user_id', $user->id)->exists();
 }
+
+public function savedPosts()
+{
+    return $this->belongsToMany(Post::class, 'saved_posts', 'user_id', 'post_id')->withTimestamps();
+}
+
+public function hasSaved(Post $post)
+{
+    return $this->savedPosts()->where('post_id', $post->id)->exists();
+}
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 

@@ -31,5 +31,9 @@ public function reposts()
 {
     return $this->hasMany(Post::class, 'original_post_id');
 }
+public function savedByUsers()
+{
+    return $this->belongsToMany(User::class, 'saved_posts', 'post_id', 'user_id')->withTimestamps();
+}
     
 }

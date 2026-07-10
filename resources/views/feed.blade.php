@@ -42,19 +42,31 @@
                     <!-- line -->
                     <div class="w-full h-[1px] bg-pink-100/60 my-4"></div>
 
-                    <!-- أزرار التنقل السريع -->
+                    <!-- أزرار التنقل السريع المحدثة بالـ Saved Items -->
                     <div class="w-full space-y-1">
                         <a href="{{ route('feed') }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-indigo-50 text-[--primary] font-bold text-xs transition shadow-xs">
                             <i class="fa-solid fa-house text-sm"></i>
                             <span>Fil d'actualité</span>
                         </a>
+                        
+                        <!-- 🌟 الـ Link الجديد ديال الـ Saved Items المذكور ف الـ US -->
+                        <a href="{{ route('saved.index') }}" class="flex items-center justify-between px-4 py-2.5 rounded-xl text-slate-500 hover:bg-indigo-50/50 hover:text-[--primary] font-semibold text-xs transition group">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-regular fa-bookmark text-sm group-hover:scale-110 transition-transform"></i>
+                                <span>Saved items</span>
+                            </div>
+                            <span class="bg-slate-100 text-slate-600 font-bold px-2 py-0.5 rounded-md text-[10px] group-hover:bg-indigo-100 group-hover:text-[--primary] transition">
+                                {{ auth()->user()->savedPosts()->count() }}
+                            </span>
+                        </a>
+
                         <a href="{{ route('users.show', auth()->user()) }}" class="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-500 hover:bg-pink-50/50 hover:text-[--pink] font-semibold text-xs transition">
                             <i class="fa-regular fa-user text-sm"></i>
                             <span>Mon Profil public</span>
                         </a>
                     </div>
 
-                    <!-- كرت الإحصائيات المطور (Abonnés / Abonnements) -->
+                    <!-- كرت الإحصائيات المطور -->
                     <div class="w-full mt-5 bg-gradient-to-br from-indigo-50 via-purple-50/50 to-pink-50 border border-purple-100/40 rounded-2xl p-3.5 text-left shadow-2xs">
                         <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Statistiques</p>
                         
@@ -140,17 +152,19 @@
                                                           ->exists();
                             
                             $hasLiked = $displayPost->likes ? $displayPost->likes->contains('user_id', auth()->id()) : false;
+                            
+                            // 🌟 واش البوست مسيف عند المستخدم الحالي؟
+                            $isSaved = auth()->user()->hasSaved($displayPost);
                         @endphp
 
                         <div class="bg-white rounded-[24px] border border-purple-100/40 shadow-xs overflow-hidden transition-all hover:shadow-md hover:shadow-purple-100/50"> 
                             
-                            <!-- الـ Header الفوقاني الخاص بالـ Repost (بحال LinkedIn) -->
+                            <!-- الـ Header الفوقاني الخاص بالـ Repost -->
                             @if($isRepost)
                                 <div class="px-5 pt-4 pb-1 border-b border-slate-50 flex justify-between items-center">
                                     <div class="flex items-center gap-2">
-                                        <!-- صورة الشخص اللي دار الـ Repost -->
                                         <div class="w-6 h-6 rounded-full overflow-hidden border border-slate-200 shadow-2xs shrink-0">
-                                            @if($post->user->avatar)
+                                            @if($post->user()->avatar)
                                                 <img src="{{ $post->user->avatar }}" class="w-full h-full object-cover">
                                             @else
                                                 <div class="w-full h-full flex items-center justify-center text-[10px] text-white bg-slate-800 font-bold">
@@ -158,18 +172,16 @@
                                                 </div>
                                             @endif
                                         </div>
-                                        <!-- نص إعادة النشر -->
                                         <span class="text-xs text-slate-500 font-medium">
                                             <strong class="text-slate-800 font-bold hover:text-[--primary] cursor-pointer">{{ $post->user->name }}</strong> a republié ceci
                                         </span>
                                     </div>
                                     
-                                    {{-- خيارات الـ Repost: الحذف يلا كان ديال المستخدم الحالي --}}
                                     @if(auth()->id() === $post->user_id)
                                         <form action="{{ route('posts.destroy', $post) }}" method="POST" class="m-0" onsubmit="return confirm('Retirer ce repost ?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="text-slate-400 hover:text-rose-500 p-1 rounded-md transition cursor-pointer" title="Retirer le repost">
+                                            <button type="submit" class="text-slate-400 hover:text-rose-500 p-1 rounded-md transition cursor-pointer">
                                                 <i class="fa-solid fa-ellipsis text-sm"></i>
                                             </button>
                                         </form>
@@ -195,7 +207,6 @@
                                                 {{ $displayPost->user->name }}
                                             </a>
                                             
-                                            <!-- زر الـ Follow للكاتب الأصلي -->
                                             @if(auth()->id() !== $displayPost->user_id)
                                                 <form action="{{ route('users.follow', $displayPost->user) }}" method="POST" class="m-0 inline">
                                                     @csrf
@@ -220,23 +231,34 @@
                                     </div>
                                 </div>
 
-                                {{-- خيارات تعديل/حذف البوست الأصلي (كتظهر فقط يلا ما كانش هاد السطر عبارة عن Repost لواحد آخر) --}}
-                                @if(!$isRepost)
-                                    @can('update', $displayPost)
-                                        <div class="flex items-center gap-1 bg-pink-50/50 p-1 rounded-lg border border-pink-100/30">
-                                            <a href="{{ route('posts.edit', $displayPost) }}" class="text-[10px] font-bold text-slate-400 hover:text-[--primary] hover:bg-white px-2 py-1 rounded-md transition" title="Modifier">
-                                                <i class="fa-solid fa-pen"></i>
-                                            </a>
-                                            <form action="{{ route('posts.destroy', $displayPost) }}" method="POST" class="m-0" onsubmit="return confirm('Supprimer ce post ?')">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="text-[10px] font-bold text-slate-400 hover:text-rose-500 hover:bg-white px-2 py-1 rounded-md transition cursor-pointer" title="Supprimer">
-                                                    <i class="fa-solid fa-trash-can"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    @endcan
-                                @endif
+                                <!-- 🌟 جهة الأزرار: خيارات التعديل/الحذف وزر الـ Save المطور -->
+                                <div class="flex items-center gap-1.5">
+                                    <!-- زر الـ Save (Bookmark) الخاص بالـ US 9.1 -->
+                                    <form action="{{ route('posts.save', $displayPost) }}" method="POST" class="m-0">
+                                        @csrf
+                                        <button type="submit" class="p-1.5 rounded-lg border transition cursor-pointer text-xs {{ $isSaved ? 'bg-indigo-50 border-indigo-200 text-[--primary]' : 'border-slate-100 text-slate-400 hover:text-[--primary] hover:bg-slate-50' }}" 
+                                                title="{{ $isSaved ? 'Retirer des signets' : 'Sauvegarder pour plus tard' }}">
+                                            <i class="fa-{{ $isSaved ? 'solid' : 'regular' }} fa-bookmark text-sm"></i>
+                                        </button>
+                                    </form>
+
+                                    @if(!$isRepost)
+                                        @can('update', $displayPost)
+                                            <div class="flex items-center gap-1 bg-pink-50/50 p-1 rounded-lg border border-pink-100/30">
+                                                <a href="{{ route('posts.edit', $displayPost) }}" class="text-[10px] font-bold text-slate-400 hover:text-[--primary] hover:bg-white px-2 py-1 rounded-md transition" title="Modifier">
+                                                    <i class="fa-solid fa-pen"></i>
+                                                </a>
+                                                <form action="{{ route('posts.destroy', $displayPost) }}" method="POST" class="m-0" onsubmit="return confirm('Supprimer ce post ?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="text-[10px] font-bold text-slate-400 hover:text-rose-500 hover:bg-white px-2 py-1 rounded-md transition cursor-pointer" title="Supprimer">
+                                                        <i class="fa-solid fa-trash-can"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        @endcan
+                                    @endif
+                                </div>
                             </div>
 
                             <!-- نص المنشور -->
@@ -299,13 +321,11 @@
                                         <div class="flex-1">
                                             <div class="flex justify-between items-center">
                                                 <span class="font-bold text-slate-900 text-[11px]">{{ $comment->user->name }}</span>
-                                                
-                                                {{-- زر مسح التعليق --}}
                                                 @if(auth()->id() === $comment->user_id || auth()->id() === $displayPost->user_id)
                                                     <form action="{{ route('comments.destroy', $comment) }}" method="POST" class="m-0 inline" onsubmit="return confirm('Supprimer ce commentaire ?')">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit" class="text-slate-400 hover:text-rose-500 transition opacity-0 group-hover/comment:opacity-100 p-1 cursor-pointer" title="Supprimer le commentaire">
+                                                        <button type="submit" class="text-slate-400 hover:text-rose-500 transition opacity-0 group-hover/comment:opacity-100 p-1 cursor-pointer">
                                                             <i class="fa-solid fa-trash-can text-[10px]"></i>
                                                         </button>
                                                     </form>
