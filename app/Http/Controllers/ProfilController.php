@@ -11,7 +11,6 @@ class ProfilController extends Controller
     //
   public function show(User $user)
 {
-    // تأكدي باللي مكتوبة 'comments.user' بالجمع (s) و 'likes' بالجمع
     $posts = $user->posts()->with(['user', 'comments.user', 'likes'])->latest()->get();
     
     return view('profile.show', compact('user', 'posts'));
