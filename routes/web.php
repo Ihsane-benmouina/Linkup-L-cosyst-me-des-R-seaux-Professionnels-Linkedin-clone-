@@ -6,6 +6,8 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\RepostController;
+use App\Http\Controllers\SavedPostController;
+
 
 
 
@@ -47,4 +49,9 @@ Route::post('/users/{user}/follow', [FollowController::class, 'toggle'])->name('
 
 
 
-Route::post('/posts/{post}/repost', [RepostController::class, 'repost'])->name('posts.repost')->middleware('auth');});
+Route::post('/posts/{post}/repost', [RepostController::class, 'repost'])->name('posts.repost');
+Route::get('/saved-items', [SavedPostController::class, 'index'])->name('saved.index');
+    
+
+    Route::post('/posts/{post}/save', [SavedPostController::class, 'toggleSave'])->name('posts.save');
+});
