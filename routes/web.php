@@ -5,6 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\RepostController;
 
 
 
@@ -43,4 +44,7 @@ Route::get('/users/{user}', [ProfilController::class, 'show'])->name('users.show
 Route::get('/profile/edit', [ProfilController::class, 'edit'])->name('profile.edit');
 Route::put('/profile/update/{user}', [ProfilController::class, 'update'])->name('profile.update');
 Route::post('/users/{user}/follow', [FollowController::class, 'toggle'])->name('users.follow');
-});
+
+
+
+Route::post('/posts/{post}/repost', [RepostController::class, 'repost'])->name('posts.repost')->middleware('auth');});

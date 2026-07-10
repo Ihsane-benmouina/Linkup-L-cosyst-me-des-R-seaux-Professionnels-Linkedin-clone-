@@ -2,25 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 
-
 class RepostController extends Controller
+{public function repost(Post $post)
 {
-    //
-    public function store(Post $post)
-    {
-        $originalPostId = $post->original_post_id ?? $post->id;
+    // كنقلبو واش هاد المستخدم ديجا دار repost لهاد البوست بظبط
+    $existingRepost = Post::where('user_id', auth()->id())
+                          ->where('original_post_id', $post->id)
+                          ->first();
 
-        Post::create([
-            'user_id' => Auth::id(),
-            'content' => $post->content, 
-            'original_post_id' => $originalPostId,
-        ]);
-
-        return back()->with('success', 'Post partagé avec succès sur votre profil !');
+    if ($existingRepost) {
+        // 1. يلا كان ديجا دار ليه Repost، دابا غانمسحوه (Unrepost)
+        $existingRepost->delete();
+        return redirect()->back()->with('success', 'Post retiré de vos partages !');
     }
+
+    // 2. يلا مكانش داير ليه Repost، عاد نكرييوه جديد
+    Post::create([
+        'user_id' => auth()->id(),
+        'content' => $post->content, // كيبقى نفس المحتوى
+        'original_post_id' => $post->id,
+    ]);
+
+    return redirect()->back()->with('success', 'Post reposté avec succès !');
+}
 }
