@@ -9,11 +9,13 @@ use Illuminate\Support\Facades\Auth;
 class ProfilController extends Controller
 {
     //
-    public function show(User $user){
-        $posts= $user->posts()->with(['user', 'comment.user','likes'])->latest()->get();
-        return view('profile.edit', compact('user','posts'));
-
-    }
+  public function show(User $user)
+{
+    // تأكدي باللي مكتوبة 'comments.user' بالجمع (s) و 'likes' بالجمع
+    $posts = $user->posts()->with(['user', 'comments.user', 'likes'])->latest()->get();
+    
+    return view('profile.show', compact('user', 'posts'));
+}
     public function edit(){
         $user=Auth::user();
         return view('profile.edit', compact('user'));

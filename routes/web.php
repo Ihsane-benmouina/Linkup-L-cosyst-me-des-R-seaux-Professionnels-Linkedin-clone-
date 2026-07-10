@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ProfilController;
+
 
 use Illuminate\Support\Facades\Route;
 
@@ -43,4 +45,10 @@ Route::middleware('auth')->group(function () {
 
     // نظام الإعجابات (Likes)
     Route::post('/posts/{post}/like', [PostController::class, 'toggleLike'])->name('posts.like');
+    // US 6.1 : Profil Public
+Route::get('/users/{user}', [ProfilController::class, 'show'])->name('users.show');
+
+// US 6.2 : Édition du propre profil
+Route::get('/profile/edit', [ProfilController::class, 'edit'])->name('profile.edit');
+Route::put('/profile/update', [ProfilController::class, 'update'])->name('profile.update');
 });
