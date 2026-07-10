@@ -9,7 +9,7 @@
             <p class="text-xs text-[--muted] mt-1">Ajustez vos infos publiques pour donner un sytle pro à votre profil.</p>
         </div>
 
-        <form action="{{ route('profile.update') }}" method="POST" class="space-y-5">
+        <form action="{{ route('profile.update',$user) }}" method="POST" class="space-y-5">
             @csrf
             @method('PUT')
 

@@ -20,8 +20,8 @@ class ProfilController extends Controller
         return view('profile.edit', compact('user'));
     }
 
-    public function update(Request $request){
-        $user=Auth::user();
+    public function update(Request $request,User $user){
+       
         $validated=$request->validate([
             'headline'=>'nullable|string|max:255',
             'company'=>'nullable|string|max:255',

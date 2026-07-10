@@ -18,8 +18,7 @@ class FollowController extends Controller
             return back()->with('error', "Vous cannot follow yourself.");
         }
 
-        $me->following()->toggle($user->id);
-
+$me->followings()->toggle($user->id); 
         return back();
     }
 }

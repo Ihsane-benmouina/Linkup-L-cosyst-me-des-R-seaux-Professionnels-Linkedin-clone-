@@ -52,7 +52,7 @@
 
             <form action="{{ route('register.store') }}" method="POST" class="space-y-3.5">
                 @csrf
-
+                @method('POST')
                 <div>
                     <label class="block text-[11px] font-bold text-[--muted] uppercase tracking-wider mb-1.5">Nom complet</label>
                     <input type="text" name="name" value="{{ old('name') }}" required placeholder="Ton nom"
